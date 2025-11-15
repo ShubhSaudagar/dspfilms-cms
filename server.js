@@ -1,21 +1,26 @@
 import express from "express";
 import payload from "payload";
 import dotenv from "dotenv";
+import cors from "cors";
 
 dotenv.config();
-const app = express();
 
-const startServer = async () => {
+const app = express();
+app.use(cors());
+app.use(express.json());
+
+const PORT = process.env.PORT || 3000;
+
+const start = async () => {
   await payload.init({
     secret: process.env.PAYLOAD_SECRET,
     mongoURL: process.env.MONGO_URL,
     express: app,
   });
 
-  app.listen(3000, () => {
-    console.log("🚀 Server running at http://localhost:3000/admin");
+  app.listen(PORT, () => {
+    console.log(`Payload running at http://localhost:${PORT}/admin`);
   });
 };
 
-startServer();
-
+start();
