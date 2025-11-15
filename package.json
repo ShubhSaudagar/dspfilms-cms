@@ -4,22 +4,18 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "payload dev",
+    "dev": "node server.js",
     "build": "payload build",
-    "start": "payload serve",
+    "start": "node server.js",
     "seed": "node seed.js"
   },
-  "engines": {
-    "node": ">=18.20.2"
-  },
   "dependencies": {
-    "payload": "3.63.0",
-    "dotenv": "16.4.5",
     "@aws-sdk/client-s3": "3.679.0",
-    "@payloadcms/plugin-cloud-storage": "3.0.0",
+    "bcryptjs": "2.4.3",
+    "cors": "2.8.5",
+    "dotenv": "16.4.5",
+    "express": "4.19.2",
     "mongodb": "6.10.0",
-    "express": "4.18.2",
-    "cors": "2.8.5"
+    "payload": "3.63.0"
   }
 }
-
