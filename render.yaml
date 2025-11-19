@@ -2,9 +2,9 @@ services:
   - type: web
     name: dspfilms-cms
     env: node
-    plan: free
+    rootDir: ./
     buildCommand: "npm install"
     startCommand: "npm start"
     envVars:
       - key: NODE_VERSION
-        value: "20.19.0"
+        value: 20.19.0
