@@ -2,6 +2,12 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 
+// Import collections (IMPORTANT)
+import Users from "./src/collections/Users.js";
+import Media from "./src/collections/Media.js";
+import Packages from "./src/collections/Packages.js";
+import Services from "./src/collections/Services.js";
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -19,65 +25,11 @@ export default {
   serverURL: process.env.PAYLOAD_PUBLIC_SERVER_URL,
 
   collections: [
-    {
-      slug: "users",
-      auth: true,
-      admin: { useAsTitle: "email" },
-      fields: [
-        { name: "name", type: "text", required: true },
-        {
-          name: "role",
-          type: "select",
-          options: ["admin", "editor"],
-          defaultValue: "admin",
-        },
-      ],
-    },
-
-    {
-      slug: "media",
-      upload: {
-        staticURL: process.env.R2_PUBLIC_BASE_URL,
-        staticDir: "media",
-      },
-      fields: [],
-    },
-
-    {
-      slug: "packages",
-      admin: { useAsTitle: "title" },
-      fields: [
-        { name: "title", type: "text", required: true },
-        { name: "subtitle", type: "text" },
-        {
-          name: "category",
-          type: "select",
-          options: [
-            { label: "WEDDING", value: "WEDDING" },
-            { label: "PRE-WEDDING", value: "PRE-WEDDING" },
-            { label: "MATERNITY_NEWBORN_FAMILY", value: "MATERNITY_NEWBORN_FAMILY" },
-          ],
-          required: true,
-        },
-        { name: "price", type: "number" },
-        { name: "features", type: "array", fields: [{ name: "item", type: "text" }] },
-        { name: "terms", type: "array", fields: [{ name: "item", type: "text" }] },
-        { name: "ctaText", type: "text", defaultValue: "Book Now" },
-        { name: "waNumber", type: "text", defaultValue: "918308398378" },
-        { name: "waMessageTemplate", type: "textarea" },
-      ],
-    },
-
-    {
-      slug: "services",
-      admin: { useAsTitle: "title" },
-      fields: [
-        { name: "title", type: "text", required: true },
-        { name: "description", type: "textarea" },
-        { name: "bgImage", type: "relationship", relationTo: "media" },
-      ],
-    },
+    Users,
+    Media,
+    Packages,
+    Services,
   ],
 
-  admin: { user: "users" },
+  admin: { user: "users" }
 };
