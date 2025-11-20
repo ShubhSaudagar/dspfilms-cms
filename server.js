@@ -2,6 +2,8 @@ import express from "express";
 import payload from "payload";
 import dotenv from "dotenv";
 import cors from "cors";
+// Import the payload config so payload.init receives the required config
+import payloadConfig from "./payload.config.js";
 
 dotenv.config();
 
@@ -16,6 +18,8 @@ const start = async () => {
     secret: process.env.PAYLOAD_SECRET,
     mongoURL: process.env.MONGO_URL,
     express: app,
+    // Spread the payload config (collections, admin, serverURL, etc.)
+    ...(payloadConfig || {}),
   });
 
   app.listen(PORT, () => {
