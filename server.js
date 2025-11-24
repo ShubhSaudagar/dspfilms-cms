@@ -5,10 +5,12 @@ import config from './payload.config.js';
 const app = express();
 
 const start = async () => {
+  // Humne secret yahan direct likh diya hai taaki deploy fail na ho
+  const secretKey = 'dsp_films_secret_key_temporary_fix_123';
+
   await payload.init({
     config,
-    // Change: Fallback secret lagaya hai taaki error na aaye
-    secret: process.env.PAYLOAD_SECRET || 'temp_secret_key_please_change_in_env', 
+    secret: secretKey,
     express: app,
     onInit: async () => {
       payload.logger.info(`Payload Admin URL: ${payload.getAdminURL()}`);
