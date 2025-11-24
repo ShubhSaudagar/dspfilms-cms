@@ -1,29 +1,22 @@
-import express from "express";
-import payload from "payload";
-import dotenv from "dotenv";
-import cors from "cors";
-// Import the payload config so payload.init receives the required config
-import payloadConfig from "./payload.config.js";
-
-dotenv.config();
+import express from 'express';
+import { init } from 'payload';
+import config from './payload.config.js'; // Change: Config import kiya
 
 const app = express();
-app.use(cors());
-app.use(express.json());
-
-const PORT = process.env.PORT || 3000;
 
 const start = async () => {
-  await payload.init({
+  // Change: 'init' function mein config pass kiya
+  await init({
+    config, 
     secret: process.env.PAYLOAD_SECRET,
-    mongoURL: process.env.MONGO_URL,
     express: app,
-    // Spread the payload config (collections, admin, serverURL, etc.)
-    ...(payloadConfig || {}),
+    onInit: async (payload) => {
+      payload.logger.info(`Payload Admin URL: ${payload.getAdminURL()}`);
+    },
   });
 
-  app.listen(PORT, () => {
-    console.log(`Payload running at http://localhost:${PORT}/admin`);
+  app.listen(3000, () => {
+    console.log('Server starting on port 3000');
   });
 };
 
